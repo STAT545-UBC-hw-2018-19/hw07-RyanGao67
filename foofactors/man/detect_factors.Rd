@@ -22,4 +22,6 @@ whether there are repeated value in the factor
 \examples{
 detect_factors(factor(c("a","b","a"))) # True
 detect_factors(factor(c("a","b","c"))) # False
+
+
 }

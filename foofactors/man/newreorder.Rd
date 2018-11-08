@@ -18,5 +18,6 @@ a factor
 A new version of reorder that uses desc
 }
 \examples{
-new_reorder(factor(c("c","b","a")))
+newreorder(factor(c("s","t","a")))
+
 }

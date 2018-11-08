@@ -15,12 +15,11 @@
 #' @examples
 #' detect_factors(factor(c("a","b","a"))) # True
 #' detect_factors(factor(c("a","b","c"))) # False
+#'
+#'
 detect_factors <- function(x){
   # check if the input is factor
-  if(!is.factor(x)){
-    stop('Please enter a factor!\n',
-         'The input is: ', class(x)[1])
-  }
+  if(!is.factor(x))stop('Please enter a factor!\n','The input is: ', class(x)[1])
   # If the length of input is not equal to unique ones return true
   return(length(unique(x)) != length(x))
 }

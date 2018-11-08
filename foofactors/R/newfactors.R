@@ -15,14 +15,14 @@
 #' newfactor(factor(c("s", "t", "a"))) # Levels: s t a
 #'
 #' @export
+#'
+#'
 newfactor <- function(x){
-  if(!is.factor(x)){
-    stop('Please enter a factor!\n',
-         'You entered: ', class(x)[1])
-  }
-
+  if(!is.factor(x))stop('Please enter a factor!\n','You entered: ', class(x)[1])
   return(factor(x, as.character(unique(x))))
 }
+
+
 
 #' @title Set the levels reversed
 #'
@@ -36,9 +36,6 @@ newfactor <- function(x){
 #'
 #' @examples newrev(factor(c("s","t","a","t")))
 newrev <- function(x){
-  if(!is.factor(x)){
-    stop('Please enter a factor!\n',
-         'You entered: ', class(x)[1])
-  }
+  if(!is.factor(x))stop('Please enter a factor!\n','You entered: ', class(x)[1])
   return(factor(x, rev(as.character(unique(x)))))
 }

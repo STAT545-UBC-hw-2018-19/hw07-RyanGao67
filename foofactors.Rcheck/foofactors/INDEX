@@ -1,0 +1,9 @@
+detect_factors          find if a factor is actually character
+dfread                  read data frames from plain text delimited
+dfwrite                 write data frames to plain text delimited
+fbind                   Bind two factors
+foofactors              foofactors: Make factors less annoying
+freq_out                Make a frequency table for a factor
+newfactor               Set the levels "as is"
+newreorder              descend a factor
+newrev                  Set the levels reversed

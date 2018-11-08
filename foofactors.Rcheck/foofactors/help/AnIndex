@@ -1,0 +1,10 @@
+foofactors-package	foofactors
+detect_factors	detect_factors
+dfread	dfread
+dfwrite	dfwrite
+fbind	fbind
+foofactors	foofactors
+freq_out	freq_out
+newfactor	newfactor
+newreorder	newreorder
+newrev	newrev
