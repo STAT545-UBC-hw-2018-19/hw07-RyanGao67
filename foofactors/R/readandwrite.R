@@ -18,9 +18,7 @@ dfwrite <- function(dataframe, file, level=NA) {
   readr::write_csv(dataframe, file)
   # if the level is not given in the parameter
   # we need a default one
-  if (is.na(level)) {
-    level <- paste0(dirname(file), "/", "levels.txt")
-  }
+  if (is.na(level)) level <- paste0(dirname(file), "/", "levels.txt")
   dput(lapply(dataframe[names(Filter(is.factor, dataframe))], levels), level)
 }
 
@@ -38,21 +36,14 @@ dfwrite <- function(dataframe, file, level=NA) {
 
 dfread <- function(file, level = NA) {
   # write data frame using read_csv()
-  ret <- readr::read_csv(file)
+  dataframe <- readr::read_csv(file)
   # check filename for levels
-  if (is.na(level)) {
-    # use dirname() to get path of filename
-    level <- paste0(dirname(file), "/", "levels.txt")
-  }
-  # get levels from companion file
-  lvs <- dget(level)
+  if (is.na(level)) level <- paste0(dirname(file), "/", "levels.txt")
   # set levels of data frame
-  for (i in seq_along(lvs)) {
+  for (i in seq_along(dget(level))) {
     # first convert columns to factor
-    ret[[names(lvs[i])]] <- as.factor(ret[[names(lvs[i])]])
-    # set levels
-    levels(ret[[names(lvs[i])]]) <- lvs[[i]]
+    dataframe[[names(dget(level)[i])]] <- as.factor(dataframe[[names(dget(level)[i])]])
+    levels(dataframe[[names(dget(level)[i])]]) <- dget(level)[[i]]
   }
-  # return data frame
-  return(ret)
+  dataframe
 }
