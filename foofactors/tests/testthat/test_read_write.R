@@ -1,41 +1,24 @@
-context("Check write/read data frame")
 
-# test case to check if we manually create a data frame
-test_that("Manually create a data frame", {
-  df <- data.frame(
-    x = 1,
-    y = 1:10,
-    fac = sample(LETTERS[1:3], 10, replace = TRUE)
-  )
+# The basic idea here is that I first introduce a data frame
+# Then I reorder the data
+# Then I write the data frame to a file
+# Then I read the data from the file
+# Then I compare the data that I created and the data that I fetched from the file
 
-  dfwrite(df, "./test_dfwrite_dfread/test_manual.csv", "./test_dfwrite_dfread/levels_manual.txt")
-  test_df <- dfread("./test_dfwrite_dfread/test_manual.csv", "./test_dfwrite_dfread/levels_manual.txt")
-
-  expect_equal(levels(test_df$fac), levels(df$fac))
-})
-
-# test case to report an error
-test_that("Not a data frame", {
-  f <- factor(c("s", "t", "a"))
-
-  expect_error(dfwrite(f))
-  expect_error(dfread(f))
-})
-
-# test case if we reorder a factor of the data frame
 test_that("Reorder factor of a data frame", {
-  df <- data.frame(
-    x = 1,
-    y = 1:10,
-    fac = sample(LETTERS[1:3], 10, replace = TRUE)
+  # first create the dataframe
+  dataframe <- data.frame(
+    first = 1,
+    second = 1:100,
+    factor = sample(LETTERS[1:3], 10, replace = TRUE)
   )
 
-  df$fac <- newreorder(df$fac)
+  dataframe$factor <- newreorder(dataframe$factor)
 
-  dfwrite(df, "./test_dfwrite_dfread/test_reorder.csv", "./test_dfwrite_dfread/levels_reorder.txt")
-  test_df <- dfread("./test_dfwrite_dfread/test_reorder.csv", "./test_dfwrite_dfread/levels_reorder.txt")
+  dfwrite(dataframe, "./test_reorder.csv", "./levels_reorder.txt")
+  fetched <- dfread("./test_reorder.csv", "./levels_reorder.txt")
 
-  expect_equal(levels(test_df$fac), levels(df$fac))
+  expect_equal(levels(fetched$factor), levels(dataframe$factor))
 })
 
 
