@@ -12,26 +12,16 @@
 #'
 #' @export
 
-dfwrite <- function(df, dffilename, lvfilename = NA) {
-  # check if the input is a factor or not
-  dfcheck <- function(x) {
-    # check if the input is a data frame or not
-    if (!is.data.frame(x)) {
-      stop("Function requires a data frame instead of a ", class(x)[1])
-    }
+dfwrite <- function(dataframe, file, level=NA) {
+  # make sure the input is a factor
+  if (!is.data.frame(dataframe)) stop("Not a data frame ", class(dataframe)[1])
+  readr::write_csv(dataframe, file)
+  # if the level is not given in the parameter
+  # we need a default one
+  if (is.na(level)) {
+    level <- paste0(dirname(file), "/", "levels.txt")
   }
-  # write data frame using write_csv()
-  readr::write_csv(df, dffilename)
-  # get names of columns of factors
-  factor_cols <- names(Filter(is.factor, df))
-  # check filename for levels
-  if (is.na(lvfilename)) {
-    # use dirname() to get path of filename
-    lvfilename <- paste0(dirname(dffilename), "/", "levels.txt")
-  }
-  # write levels to companion file
-  # use lapply() and levels() to get levels of factor columns
-  dput(lapply(df[factor_cols], levels), lvfilename)
+  dput(lapply(dataframe[names(Filter(is.factor, dataframe))], levels), level)
 }
 
 #' @title  read data frames from plain text delimited
@@ -46,16 +36,16 @@ dfwrite <- function(df, dffilename, lvfilename = NA) {
 #'
 #' @export
 
-dfread <- function(file, level) {
+dfread <- function(file, level = NA) {
   # write data frame using read_csv()
-  ret <- readr::read_csv(dffilename)
+  ret <- readr::read_csv(file)
   # check filename for levels
-  if (is.na(lvfilename)) {
+  if (is.na(level)) {
     # use dirname() to get path of filename
-    lvfilename <- paste0(dirname(dffilename), "/", "levels.txt")
+    level <- paste0(dirname(file), "/", "levels.txt")
   }
   # get levels from companion file
-  lvs <- dget(lvfilename)
+  lvs <- dget(level)
   # set levels of data frame
   for (i in seq_along(lvs)) {
     # first convert columns to factor
