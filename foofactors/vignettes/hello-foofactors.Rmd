@@ -1,6 +1,6 @@
 ---
 title: "stringsAsFactors = HELLNO"
-author: "Jenny Bryan"
+author: "Tian Gao"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -48,3 +48,79 @@ The `freq_out()` function returns a frequency table as a well-named `tbl_df`:
 freq_out(x)
 ```
 
+* `detect_factors()`
+
+* The `fdetect()` function checks if a factor is actually a character, it basicly checks that if a factor has repeated value in which case the factor can be considered as a character
+
+```{r}
+# This is a factor
+factor <- factor(c("m","i","s","s","i","s"))
+# This is a character
+character <- factor(c("s", "t", "a"))
+                      
+# return TRUE if it is a factor
+detect_factors(factor)
+# return FALSE if it is a character
+detect_factors(character)
+```
+
+* `newreorder()`
+
+* The `newreorder()` function can reorder the levels of a factor in descending order.
+
+```{r}
+# create a factor as an example
+f <- factor(c("a", "b", "c","d"))
+# the originally order: "a" "b" "c" "d"
+levels(f)
+# the reordered order "d" "c" "b" "a"
+levels(newreorder(f))
+```
+
+* `newfactor()`
+Set levels of a factor to the order in which they appear in the data.
+* `newrev()`
+Set levels of a factor to the reversed order in which they appear in the data.
+
+```{r}
+# create a factor as an example
+f <- factor(c("b", "a", "c"))
+# the originally order of level should be "b" "a" "c"
+levels(f)
+# the reset levels should be "b" "a" "c"
+levels(newfactor(f))
+# the reversed levels should be "c" "a" "b"
+levels(newrev(f))
+```
+
+* `dfwrite()`/`dfread()`
+
+Functions `dfwrite()` and `dfread()`: functions to write and read data frames to plain text delimited files while retaining factor levels
+
+```{r}
+# The basic idea here is that I first introduce a data frame
+# Then I reorder the data
+# Then I write the data frame to a file
+# Then I read the data from the file
+# Then I compare the data that I created and the data that I fetched from the file
+
+
+dataframe <- data.frame(
+    first = 1,
+    second = 1:100,
+    factor = sample(LETTERS[1:6], 10, replace = TRUE)
+)
+
+  dataframe$factor <- newreorder(dataframe$factor)
+
+  dfwrite(dataframe, "./test_reorder.csv", "./levels_reorder.txt")
+  fetched <- dfread("./test_reorder.csv", "./levels_reorder.txt")
+
+levels(fetched$factor)
+levels(dataframe$factor)
+
+```
+
+
+## References
+- [Be the boss of your factors](https://www.stat.ubc.ca/~jenny/STAT545A/block08_bossYourFactors.html)

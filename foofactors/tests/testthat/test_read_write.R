@@ -10,7 +10,7 @@ test_that("Reorder factor of a data frame", {
   dataframe <- data.frame(
     first = 1,
     second = 1:100,
-    factor = sample(LETTERS[1:3], 10, replace = TRUE)
+    factor = sample(LETTERS[1:6], 10, replace = TRUE)
   )
 
   dataframe$factor <- newreorder(dataframe$factor)

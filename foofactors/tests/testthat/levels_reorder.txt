@@ -1,1 +1,1 @@
-list(factor = c("C", "B", "A"))
+list(factor = c("F", "D", "C", "B", "A"))
