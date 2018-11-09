@@ -1,5 +1,5 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-**Note1: This is originally created by jennybe, you can find the
+**Note1: This is originally created by jennybc, you can find the
 original one [here](https://github.com/jennybc/foofactors)** **NOTE2:
 This is a toy package created for expository purposes. It is not meant
 to actually be useful. If you want a package for factor handling, please
